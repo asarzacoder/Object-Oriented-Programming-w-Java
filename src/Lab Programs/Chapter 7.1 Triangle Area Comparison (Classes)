@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+/**
+ * Author: Armando Sarza
+ * Description: This program reads two different triangle objects data
+ *  and compare to find the largest area.
+ * Date Modified: 12/26/2025
+ */
+
+public class TriangleArea {
+    public static void main (String[] args) {
+        Scanner scnr = new Scanner(System.in);
+
+        // Two objects to compare our triangles
+        Triangle triangle1 = new Triangle();
+        Triangle triangle2 = new Triangle();
+
+        // Read and set base + height of triangles
+        triangle1.setBase(scnr.nextDouble());
+        triangle1.setHeight(scnr.nextDouble());
+
+        triangle2.setBase(scnr.nextDouble());
+        triangle2.setHeight(scnr.nextDouble());
+
+        System.out.println("Triangle with larger area:");
+        // Compare both triangles area to see which one is bigger
+        if (triangle1.getArea() > triangle2.getArea()) {
+            triangle1.printInfo();
+        } else {
+            triangle2.printInfo();
+        }
+    }
+}

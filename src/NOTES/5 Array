@@ -1,0 +1,8 @@
+                                                    ARRAYS
+
+Overview: Array is a variable that stores a list of data items, with each item being directly accessible.
+    -> Each item in an array is called an element, and each element's location num is called the index (i).
+        -> Accessing elements syntax (Java) -> myArray[i]
+    -> Some other languages use a construct similar to an array called a vector.
+
+-------------------------------------------------- Definitions --------------------------------------------------

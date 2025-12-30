@@ -1,0 +1,43 @@
+/**
+ * Author: Armando Sarza
+ * File Description: This file holds info on our items to purchase.
+ **/
+public class ItemToPurchase {
+
+    // Private Fields
+    private String itemName;
+    private int itemPrice;
+    private int itemQuantity;
+
+    // Default Constructor
+    public ItemToPurchase(){
+        itemName = "none";  // Initial to none
+        itemPrice = 0;      // Initial to 0
+        itemQuantity = 0;   // Initial to 0
+    }
+
+    // Public Member Methods (Setter -> Mutators | Getter -> Accessors)
+    public void setName(String itemName) {
+        this.itemName = itemName;   // this.itemName points to objects field/ itemName refers to parameter
+    }
+
+    public void setPrice(int itemPrice) {
+        this.itemPrice = itemPrice;   // this.itemPrice points to objects field/ itemPrice refers to parameter
+    }
+
+    public void setQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;   // this.itemQuantity points to objects field/ itemQuantity refers to parameter
+    }
+
+    public String getName() {
+        return itemName;
+    }
+
+    public int getPrice() {
+        return itemPrice;
+    }
+
+    public int getQuantity() {
+        return itemQuantity;
+    }
+}

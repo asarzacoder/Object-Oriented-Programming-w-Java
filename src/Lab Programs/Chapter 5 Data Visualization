@@ -1,0 +1,163 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Chapter 5 Data Visualization
+
+/**
+ * This program requests user to provide a title for data and two column data titles.
+ * Requirements:
+ *  1. Prompt user for title for data and output it.
+ *  2. Prompt user for the headers of two columns of a table and output it.
+ *  3. Prompt user for data points:
+ *      - FORMAT: string, int
+ *      - Store the information before the comma into a string and information after the comma into integer.
+ *      - User will enter -1 when they finish entering data points.
+ *          - Store string components of the data points in ArrayList of strings.
+ *          - Store integer components of the data points in a second ArrayList of integers.
+ *  4. Error Checking !!!
+ *      1. If entry has no comma = Error: No comma in string.
+ *      2. If entry has more than one comma = Error: Too many commas in input.
+ *      3. If entry after the comma is not an integer = Error: Comma not followed by an integer.
+ *  5. Output information in a formatted table:
+ *      - Title is justified with a minimum of 33 characters.
+ *          -> Column 1 is left justified with a minimum of 20 characters.
+ *          -> Column 2 is right justified with a minimum of 23 characters.
+ *  6. Output information as a formatted histogram. Each name is right justified with a minimum of 20 characters.
+ */
+
+public class Practice {
+    public static void main(String[] args) {
+        // ----------------------------- Prompt user for title and output ----------------- part 1 //
+        Scanner scnr = new Scanner(System.in);
+        Scanner inSS = null;
+
+        // Array list for storing string and integer data.
+        ArrayList<String> stringData = new ArrayList<String>();
+        ArrayList<Integer> integerData = new ArrayList<Integer>();
+
+        // variables
+        String titleData;
+        String header1, header2;
+
+        System.out.println("Enter a title for the data:");
+        titleData = scnr.nextLine();
+        System.out.println("You entered: \n" + titleData);
+
+        // ------------ Prompt user for the headers of two columns of a table and output ---- part 2 //
+        System.out.println("Enter the column 1 header:");
+        header1 = scnr.nextLine();
+        System.out.println("You entered: " + header1 + "\n");
+        System.out.println("Enter the column 2 header:");
+        header2 = scnr.nextLine();
+        System.out.println("You entered: " + header2 + "\n");
+
+        // --------------------------------------------------------------------------------- part 3 //
+        /**
+         * Prompt the user for data points in the format of (string, int).
+         *  - Keep prompting user until user hit -1.
+         *  - Store string data in an array list of strings.
+         *  - Store integer data in an array list of integers.
+         */
+        System.out.println("Enter a data point (-1 to stop input):");
+        String userString = scnr.nextLine();
+        String intData = null;
+        while (!userString.equals("-1")) {
+            /**
+             * Start error checking:
+             *  Error Checking !!!
+             *      1. If entry has no comma = Error: No comma in string.
+             *      2. If entry has more than one comma = Error: Too many commas in input.
+             *      3. If entry after the comma is not an integer = Error: Comma not followed by an integer.
+             */
+            boolean passCheck = false;
+            while (!passCheck) {
+
+                // Quick check if user want stop.
+                if (userString.equals("-1")) {
+                    System.out.println();
+                    break;
+                }
+
+                // Retrieve last element of string input for integer check.
+                char lastCharInput = userString.charAt(userString.length() - 1);
+
+                // Quick count of commas for later error checking.
+                int count = 0;
+                for (int i = 0; i < userString.length(); i++) {
+                    if (userString.charAt(i) == ',') {
+                        count++;
+                    }
+                }
+
+                // ERROR CHECKING!
+                if (!(userString.contains(","))) {
+                    System.out.println("Error: No comma in string.\n");
+                    System.out.println("Enter a data point (-1 to stop input):");
+                    userString = scnr.nextLine();
+                    continue;
+                }
+                if (count > 1) {
+                    System.out.println("Error: Too many commas in input.\n");
+                    System.out.println("Enter a data point (-1 to stop input):");
+                    userString = scnr.nextLine();
+                    continue;
+                }
+                if (!Character.isDigit(lastCharInput)) {
+                    System.out.println("Error: Comma not followed by an integer.\n");
+                    System.out.println("Enter a data point (-1 to stop input):");
+                    userString = scnr.nextLine();
+                    continue;
+                }
+                passCheck = true;
+
+                int commaIndex = userString.indexOf(",");                   // Should return the index of comma occurrence.
+                String name = userString.substring(0, commaIndex).trim();
+                intData = userString.substring(commaIndex + 1).trim();
+
+                // Output data points entered.
+                System.out.println("Data string: " + name);
+                System.out.printf("Data integer: %d", Integer.parseInt(intData));
+
+                // Add into array list.
+                stringData.add(name);
+                integerData.add(Integer.valueOf(intData));
+            }
+            if (userString.equals("-1")) {
+                break;
+            }
+
+            System.out.println("\nEnter a data point (-1 to stop input):");
+            userString = scnr.nextLine();
+        }
+
+        // ------------------------------ Output Info In Format --------------------------- part 4 //
+        /**
+         * Output information in a formatted table:
+         *  - Title is justified with a minimum of 33 characters.
+         *      -> Column 1 is left justified with a minimum of 20 characters.
+         *      -> Column 2 is right justified with a minimum of 23 characters.
+         */
+        System.out.println();
+        System.out.printf("%33s%n", titleData);
+        System.out.printf("%-20s|%23s%n", header1, header2);
+        System.out.println("--------------------------------------------");
+        for (int i = 0; i < stringData.size(); i++) {
+            System.out.printf("%-20s|%23d%n", stringData.get(i), integerData.get(i));
+        }
+
+        // --------------------------- Output Info Histogram  --------------------------- part 4 //
+        /**
+         * Output information in a histogram format where * represents number of novels.
+         *  ex. Jane Austen ****** -> 6 novels.
+         */
+        System.out.println();
+        for (int i = 0; i < stringData.size(); i++) {
+            System.out.printf("%20s ", stringData.get(i));
+            int numBooks = integerData.get(i);
+            for (int j = 0; j < numBooks; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        };
+    }
+}

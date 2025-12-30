@@ -1,0 +1,91 @@
+OUTPUT AND INPUT STREAMS
+
+When using: printf() or format()
+    ex -> System.out.print("Hello, I am %d years old!", age);
+
+SUB_SPECIFIER
+Notes: Provides formatting options between % and format specifier character.
+       This works for floats, integers and strings.
+
+    ex -> ("%.1f", myFloat) causes floating-point to output 1 digit after decimal.
+       width: ("Value: %7.2f", myFloat) -> Value:   12.34
+       flags: ("%+f", myFloat) -> +12.340000
+              ("%08.2f, myFloat) -> 00012.34
+
+------------------------------------------------------------------------------------------
+Format Specifier    |   Char        |               Notes                                |
+------------------------------------------------------------------------------------------
+    %c              |   char                    |   Prints a single character            |
+    %d              |   int, long, short        |   Prints decimal integer value         |
+    %o              |   int, long, short        |   Prints octal integer value           |
+    %h              |   int, char, long, short  |   Prints hexadecimal integer value     |
+    %f              |   float, double           |   Prints a floating-point value        |
+    %e              |   float, double           |   Prints a floating-point scientific   |
+    %s              |   String                  |   Prints a string variable or literal  |
+    %%              |                           |   Prints the "%" character             |
+    %n              |                           |   Prints new-line character            |
+------------------------------------------------------------------------------------------
+
+--------------------------------------------------- FLUSHING OUTPUT ---------------------------------------------------
+Notes: If the output needs to appear immediately, call .flush() or end the line with println().
+
+-------------------------------------- READING FROM A STRING USING SCANNER OBJECT -------------------------------------
+    Scanner inSS = null;                        // Input string stream.
+    input = "Armando Sarza 28";
+    inSS = new Scanner(input);                  // Init scanner object with string.
+
+    // Parse name and age values from string.
+    firstName = inSS.next();    <- Armando
+    lastname = insSS.next();    <- Sarza
+    userAge = inSS.nextInt();   <- 28
+
+------------------------------------------- CREATING STRING USING STREAMS ---------------------------------------------
+Steps: Requirements
+1. Need to import -> java.io.PrintWriter && java.io.StringWriter.
+2. To create a PrintWriter, program must create a StringWriter. -> StringWriter fullnameCharStream = new StringWriter();
+3. Pass StringWriter object to the constructor for PrintWriter. -> PrintWriter fullnameOSS = new PrintWriter (fullnameCharStream);
+4. Now you can insert characters into that stream using print() and println(). -> fullnameOSS.print(lastName + ", " + firstName);
+5. Program can then use StringWriter's toString() method to copy that buffer to a String. -> fullName = fullnameCharStream.toString();
+
+----------------------------------------------------- FILE INPUT ------------------------------------------------------
+Opening and reading from a file - Requirements
+IMPORTS
+    java.io.FileInputStream
+    java.io.IOException;
+
+VARIABLES
+    FileInputStream fileByteStream = null;  <- Allows programmer to read bytes from a file.
+    Scanner inFS = null;
+
+OPENING FILE
+    fileByteStream = new FileInputStream("filename.txt");   <- Opens file for reading.
+    inFS = new Scanner(fileByteStream)  <- creates new Scanner using fileByteStream.
+
+IF FAIL TO OPEN -> public static void main(String[] args) throws IOException {
+    Cause: File does not exist or is in use by another program.
+    Action: Throws an IOException and program terminates.
+
+IF SUCCESSFUL OPEN
+    Scanner object: inFS.nextInt() can be use to read first integer from the file.
+    Reading until EOF: while (inFS.hasNextInt()) reads integers until next read is not integer or reached end of file.
+
+CLOSE FILE
+    fileByteStream.close();
+
+---------------------------------------------------- FILE OUTPUT ------------------------------------------------------
+Opening and writing to a file - Requirements
+IMPORTS
+    java.io.PrintWriter;
+    java.io.FileOutputStream;
+    import java.io.IOException;
+OPENING FILE
+    FileOutputStream fileStream = new FileOutputStream("filename.txt");
+
+CREATE PRINT WRITER TO WRITE IN FILE
+    PrintWriter outFS = new PrintWriter(fileStream);
+
+WRITE TO THE FILE
+    outFS.println("Hello World!");
+
+CLOSE FILE AFTER WRITING DATA
+    outFS.close();

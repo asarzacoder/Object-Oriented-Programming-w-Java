@@ -1,0 +1,47 @@
+BRANCHES
+
+-------------------------------------------------- String Comparisons --------------------------------------------------
+Notes:
+    Comparing strings:
+        string1.equals(string2)      // .equals() is used to compare strings if they are equal.
+
+    Comparing strings (rationally):
+        string1.compareTo(string2) < 0      // string1 is less than string2
+        string1.compareTo(string2) == 0     // string1 is equal to string2
+        string1.compareTo(string2) > 0      // string1 is greater than string2
+
+    Comparing strings (ignoring case):
+        string1.equalsIgnoreCase(string2) and string1.compareToIgnoreCase(string2)
+
+----------------------------------------------- String Access Operations -----------------------------------------------
+Notes: Strings are immutable meaning they cannot be changed. They must be assigned in a result of operation.
+
+    Accessing string character (at index):
+        string.charAt(i)
+
+    Appending (add to the end) of string:
+        string.concat(stringToAdd)
+
+    indexOf():
+        indexOf(itemToLookFor)              <- Gets index of the first occurrence in a string:
+        indexOf(item, i)                    <- starts looking at index i.
+        lastIndexOf(item)                   <- finds the last occurrence of the item in a string.
+
+    substring():
+        substring(startIndex)               <- returns substring starting at index.
+                                            <- ex. Armando.substring(3) returns "ando"
+        substring(startIndex, endIndex)     <- returns substring starting and ending on index.
+
+    replace():
+        replace(findStr, replaceStr)        <- replace a string of first occurrence with another string.
+        replace(findChar, replaceChar)      <- replace a char in a string with another char.
+
+------------------------------------------------- Character Operations -------------------------------------------------
+Notes:
+    Character.isLetter(c)         |   true if char is alphabetic
+    Character.isDigit(c)          |   true if char is digit
+    Character.isWhiteSpace(c)     |   true if char is whitespace
+    Character.toUpperCase(c)      |   turns char uppercase version
+    Character.toLowerCase(c)      |   turns char lowercase version
+
+
