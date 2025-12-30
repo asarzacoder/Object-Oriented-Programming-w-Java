@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+// Chapter 4 Loops
+
+/**
+ * Program takes any number of non-negative integers and outputs the max and average.
+ * Requirements:
+ *  A negative number ends the input and is not included in the number list.
+ *  Find MAX and AVERAGE.
+ */
+
+public class Practice {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+
+        // Variables needed for input, total, max and average.
+        int numInputs = scnr.nextInt();
+        int total = 0;
+        int MAX = 0;
+        int average, count = 0;
+
+        while (numInputs >= 0) {
+            // Check if input is greater than previous input.
+            if (numInputs > MAX) {
+                MAX = numInputs;            // Assign MAX number.
+            }
+            total += numInputs;             // Update total adding input.
+            count++;                        // Update count of how many inputs.
+
+            // Update input variable.
+            numInputs = scnr.nextInt();
+        }
+
+        // Find and calculate average.
+        average = total / count;
+
+        System.out.println(MAX + " " + average);
+
+        scnr.close();
+    }
+}

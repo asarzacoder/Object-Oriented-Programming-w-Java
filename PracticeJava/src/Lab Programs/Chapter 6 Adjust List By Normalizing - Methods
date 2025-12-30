@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+/**
+ * Author: Armando Sarza
+ * Description:
+ * This program takes the first integer input and assign it as how many values follows.
+ * Takes the lowest number out of the given inputs and subtracts it from the rest of the numbers.
+ * Outputs the adjusted values by normalizing.
+ */
+public class Practice {
+
+    /**
+     * Finds the lowest value in an array of integers.
+     * @param listInts Array of integers.
+     * @param listSize Size of the array.
+     * @return lowest number from the array.
+     */
+    public static int getMinimumInt(int[] listInts, int listSize){
+        int lowest = listInts[0];
+        for (int i = 1; i < listSize; i++) {
+            if (listInts[i] < lowest) {
+                lowest = listInts[i];
+            }
+        }
+        return lowest;
+    }
+
+    /**
+     * Gets values from user input and stores them in an array.
+     * @param arrVals Our array to store values.
+     * @param size Number of values to be stored.
+     * @param scnr Scanner object for user input.
+     */
+    public static void getValues(int[] arrVals, int size, Scanner scnr) {
+        for (int i = 0; i < size; i++) {
+            arrVals[i] = scnr.nextInt();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+        int[] intValues = new int[20];
+
+        int numVals = scnr.nextInt();
+
+        getValues(intValues, numVals, scnr);
+
+        int lowestVal = getMinimumInt(intValues, numVals);
+
+        for (int i = 0; i < numVals; i++){
+            int adjustedVal = intValues[i] - lowestVal;
+            System.out.print(adjustedVal + " ");
+        }
+        System.out.println();
+        scnr.close();
+    }
+}

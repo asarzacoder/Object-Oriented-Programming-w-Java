@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+/**
+ * Author: Armando Sarza
+ * Description: This practice program gets item from user and calculates total.
+ * Date Modified: 12/26/2025
+ */
+
+public class ShoppingCartPrinter {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+        ItemToPurchase firstPurchase = new ItemToPurchase();    // First object of ItemToPurchase
+        ItemToPurchase secondPurchase = new ItemToPurchase();   // Second object of ItemToPurchase
+        int firstItemTotal, secItemTotal, total;
+
+        System.out.println("Item 1");
+        // Ask for first item name, price, and quantity
+        System.out.println("Enter the item name:");
+        firstPurchase.setName(scnr.nextLine());
+        System.out.println("Enter the item price:");
+        firstPurchase.setPrice(scnr.nextInt());
+        System.out.println("Enter the item quantity:");
+        firstPurchase.setQuantity(scnr.nextInt());
+
+        // Call scnr.nextLine() to allow user to input a new string
+        scnr.nextLine();
+
+        System.out.println("\nItem 2");
+        // Ask for second item name, price and quantity
+        System.out.println("Enter the item name:");
+        secondPurchase.setName(scnr.nextLine());
+        System.out.println("Enter the item price:");
+        secondPurchase.setPrice(scnr.nextInt());
+        System.out.println("Enter the item quantity:");
+        secondPurchase.setQuantity(scnr.nextInt());
+
+        // Add the cost of two items together and output total cost
+        firstItemTotal = firstPurchase.getPrice() * firstPurchase.getQuantity();
+        secItemTotal = secondPurchase.getPrice() * secondPurchase.getQuantity();
+        total = firstItemTotal + secItemTotal;
+
+        // Output
+        System.out.println("\nTOTAL COST");
+        System.out.println(firstPurchase.getName() + " " + firstPurchase.getQuantity() +
+                            " @ $" + firstPurchase.getPrice() + " = $" + firstItemTotal);
+        System.out.println(secondPurchase.getName() + " " + secondPurchase.getQuantity() +
+                            " @ $" + secondPurchase.getPrice() + " = $" + secItemTotal + "\n");
+        System.out.println("Total: $" + total);
+    }
+}

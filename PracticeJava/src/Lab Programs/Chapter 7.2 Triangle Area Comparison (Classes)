@@ -1,0 +1,38 @@
+/**
+ *
+ * Author: Armando Sarza
+ * File Description: This java file holds the triangle info datas of two triangle objects.
+ *
+ **/
+public class Triangle {
+
+    // Private fields
+    private double base;
+    private double height;
+
+    // Default Constructor
+    public Triangle(){
+        base = 0;
+        height = 0;
+    }
+
+    // Public Member Methods -> Setters (Mutators)
+    public void setBase (double base){
+        this.base = base;       // this.base refers to default construct while base refers to param
+    }
+
+    public void setHeight (double height){
+        this.height = height;   // this.height refers to default construct while height refers to param
+    }
+
+    public double getArea (){
+        double area = base*height/2;
+        return area;
+    }
+
+    public void printInfo() {
+        System.out.printf("Base: %.2f\n", base);
+        System.out.printf("Height: %.2f\n", height);
+        System.out.printf("Area: %.2f\n", getArea());
+    }
+}

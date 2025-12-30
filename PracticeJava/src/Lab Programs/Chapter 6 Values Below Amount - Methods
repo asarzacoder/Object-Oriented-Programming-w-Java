@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+// Chapter 6 Output values below an amount - methods
+
+/**
+ * Author: Armando Sarza
+ * Description:
+ * First integer input determines the number of integers in the list.
+ * Gets a list of integers from input. Output all values less than or equals to the last value.
+ */
+
+public class Practice {
+
+    /**
+     * This gets a list of integers from input.
+     * @param array reference for our array input values.
+     * @param size number of elements in our array.
+     * @param scnr Scanner object passed as reference for input.
+     */
+    public static void getUserValues(int[] array, int size, Scanner scnr) {
+        for (int i = 0; i < size; i++) {
+            array[i] = scnr.nextInt();
+        }
+    }
+
+    /**
+     * This method checks which element values are less than or equal to the upperThreshold.
+     * Stores them in userValues.
+     * @param userValues current array with user input values.
+     * @param userValsSize number of elements in userValues.
+     * @param upperThreshold threshold value to compare against.
+     * @param resValues new array to store values less than or equal to threshold.
+     * @return number of elements stored in resValues.
+     */
+    public static int intsLessThanOrEqualToThreshold(int[] userValues, int userValsSize, int upperThreshold, int[] resValues) {
+        int resSize = 0;
+
+        for (int i = 0; i < userValsSize; i++){
+            if (userValues[i] < upperThreshold) {
+                resValues[resSize] = userValues[i];
+                resSize++;
+            }
+        }
+        return resSize;
+    }
+
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+        int[] inputVals = new int[20];
+        int[] resVals = new int[20];
+        int arrSize = 0;
+
+        // Get first integer input for array size.
+        arrSize = scnr.nextInt();
+
+        // Call getUserValues method to retrieve values for array.
+        getUserValues(inputVals, arrSize, scnr);
+
+        // Assign upper threshold as the last element in inputVals array.
+        int upperThreshold = scnr.nextInt();
+
+        // Determine threshold to pass to method.
+        int resValsSize = intsLessThanOrEqualToThreshold(inputVals, arrSize, upperThreshold, resVals);
+
+        // Output resVals elements that are less than or equal to upperThreshold.
+        for (int i = 0; i < resValsSize; i++) {
+            System.out.print(resVals[i] + " ");
+        }
+        System.out.println();
+    }
+}

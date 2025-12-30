@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+// Chapter 3 Branches
+
+/**
+ * This program determines if a year is a leap year.
+ * Requirements of leap year:
+ *  Year must be divisible by 4.
+ *  if the year is a century year (1700, 1800, etc.), year must be divisible by 400.
+ */
+
+public class Practice {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+
+        // Variable for year input.
+        int year = scnr.nextInt();
+
+        /**
+         * Calculate to see if century year is divisible by 400.
+         * Calculate to see if year is divisible by 4.
+         */
+        if (year % 400 == 0) {
+            System.out.println(year + " - leap year");
+        }
+        else if (year % 4 == 0 && year % 100 != 0) {
+            System.out.println(year + " - leap year");
+        }
+        else {
+            System.out.println(year + " - not leap year");
+        }
+
+        scnr.close();
+    }
+}

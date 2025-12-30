@@ -1,0 +1,76 @@
+USER-DEFINED METHODS NOTES
+---------------------------------------------- Ways of program development ---------------------------------------------
+    Modular development -> process of dividing a program into a separate modules that can be developed and tested
+    separately and then integrated into a single program.
+
+    Incremental development -> process in which a programmer writes, compiles and tests small amount of codes. (Repeat).
+
+    Method stub -> method definition whose statements have not yet been written.
+        Notes: Use method stubs to capture high-level behavior of main() and the required method before diving
+        into details of each method.
+--------------------------------------------------- Basics of Methods --------------------------------------------------
+Method Definition -> public static double calcPizzaArea() { BODY }
+    - Must be defined within a class.
+    - Public means it can be called from any class in the program.
+    - Static means the method only uses values that are passed to the method.
+
+Method Call -> calcPizzaArea();
+
+Return -> A method may return one value using a return statement.
+
+Parameters ->
+    - Parameter is a method input specified in a method definition.
+
+                                                     PARAMETER
+        (Ex. public static double calcPizzaArea(double pizzaDiameter) { BODY }
+    - Argument is a value provided to a method's parameter during a method call. (Ex. calcPizzaArea(12.0)).
+
+----------------------------------------------------- Unit Testing -----------------------------------------------------
+Notes: Good practice is to test small parts of the program individually, before testing the entire program.
+
+1. Create a testBench aka test harness.
+   Purpose -> Check that a method returns correct output values for a variety of input values.
+   Notes -> Each unique set of input values is known as test vector.
+            Assertions need to be enabled as virtual machine arguments on the command line or in your IDE.
+
+A better test harness would only print a message for incorrect output.
+ASSERT -> Java provides a compact way to print an error message when an expression evaluates to false.
+       -> assert testExpression : detailedMessage;
+
+       ex. Before -> System.out.println("0:0, expecting 0, got " + hrMinToMin(0, 0));
+           After -> assert (hrMinToMin(0, 0) == 0) : "Assertion (hrMinToMin(0, 0) == 0) failed";
+
+Notes -> Assertion is not enabled by default. Must execute Java programs with additional command-line options.
+            -> java -ea HrMinToMinTestHarness
+
+2. Using branches for unit test.
+
+        if (hrMinToMin(0, 0) != 0) {
+            System.out.println("0:0, expecting0, got " + hrMinToMin(0, 0));
+        }
+
+-------------------------------------------------- Scanner In Methods --------------------------------------------------
+Notes:
+    1. A program should only have one Scanner per input stream. A good practice is to create a single Scanner object in
+       main() and passes the Scanner to another method.
+
+            method call -> "Pizza has " + getPizzaCalories(scnr) + "calories.";
+            method definition -> public static double getPizzaCalories(Scanner scnr){}
+
+-------------------------------------------- Java Documentation for methods --------------------------------------------
+Notes:
+    - Good practice is to include doc comment for every method, having at least an overall description,
+      a @param block tag for each parameter and @return block tag if not void.
+
+JavaDoc ->
+    - Tool that parses specially formatted multi-line comments to generate program documentation in HTML format.
+    - Doc comments begin with /** and end with */
+
+Tags Section ->
+    - Consists of block tags, each of the form @ keyword plus text having its own line.
+
+    @author     <- list the item's author
+    @version    <- indicates the items version (typically fo a program)
+    @param      <- describes a method parameters type, purpose, etc.
+    @return     <- describes a method's return type, purpose, or void.
+    @see        <- refers to relevant information like a website, or another method.

@@ -1,0 +1,90 @@
+import java.util.Scanner;
+
+// Chapter 3 Branches
+
+/**
+ * Program outputs the change amount in pennies, nickels, dime, and quarters.
+ *  Pennies = 1, Nickels = 5, Dimes = 10, Quarters = 25, Dollars = 1;
+ */
+
+public class Practice {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+
+        // Value of change.
+        int pennies = 0, nickels = 0, dimes = 0, quarters = 0, dollars = 0;
+
+        // Variable for user total. (ex. 156 -> 1 dollar, 2 quarters, 1 nickel, 1 penny)
+        int userChange = scnr.nextInt();
+
+        if (userChange != 0) {
+
+            dollars = userChange / 100;     // 156 / 100 = 1.56 -> 1 Dollar
+            // Subtract the amount of quarters from change if any.
+            if (!(dollars == 0)) {
+                userChange = userChange -  (100 * dollars);
+            }
+
+            quarters = userChange / 25;     // 56 / 25 = 2.24 -> 2 Quarters
+            // Subtract the amount of quarters from change if any.
+            if (!(quarters == 0)) {
+                userChange = userChange -  (25 * quarters);
+            }
+
+            dimes = userChange / 10;        // 6 / 10 = 0.6 -> 0 Dimes
+            // Subtract the amount of dimes from change if any.
+            if (!(dimes == 0)) {
+                userChange = userChange - (10 * dimes);
+            }
+
+            nickels = userChange / 5;        // 6 / 5 = 1.2 -> 1 Nickels
+            // Subtract the amount of dimes from change if any.
+            if (!(nickels == 0)) {
+                userChange = userChange - (5 * nickels);
+            }
+
+            pennies = userChange;        // 1 / 1 = 1 -> 1 Penny
+            // Subtract the amount of dimes from change if any.
+            if (!(pennies == 0)) {
+                userChange = userChange - (1 * pennies);
+            }
+        }
+        else {
+            System.out.println("No change");
+        }
+
+        // Output change if any.
+        if (dollars > 1) {
+            System.out.printf("%d Dollars\n", dollars);
+        } else if (dollars > 0) {
+            System.out.printf("%d Dollar\n", dollars);
+        }
+
+        if (quarters > 1) {
+            System.out.printf("%d Quarters\n", quarters);
+        } else if (quarters > 0) {
+            System.out.printf("%d Quarter\n", quarters);
+        }
+
+        if (dimes > 1) {
+            System.out.printf("%d Dimes\n", dimes);
+        }
+        else if (dimes > 0) {
+            System.out.printf("%d Dime\n", dimes);
+        }
+
+        if (nickels > 1) {
+            System.out.printf("%d Nickels\n", nickels);
+        }
+        else if (nickels > 0) {
+            System.out.printf("%d Nickel\n", nickels);
+        }
+
+        if (pennies > 1) {
+            System.out.printf("%d Pennies\n", pennies);
+        }
+        else if (pennies > 0)  {
+            System.out.printf("%d Penny\n", pennies);
+        }
+    }
+}

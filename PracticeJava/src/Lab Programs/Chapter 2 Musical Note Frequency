@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+// Chapter 2 : Variables and Assignments
+
+/**
+ * Variables needed for calculations
+ *  Higher key formula: initialKey * r^n;
+ *      r = 2^(1/12)
+ *      n = distance/number of keys from that key
+ * Goal: Given initial key, output the initial key and the next 4 higher key.
+ */
+
+public class LabProgram {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);
+
+        // Variables
+        double initialKey, key2, key3, key4, key5;
+        double r = Math.pow(2.0, 1.0/12.0);
+
+        // Need input from AI
+        initialKey = scnr.nextDouble();
+
+        key2 = (initialKey * Math.pow(r, 1));
+        key3 = (initialKey * Math.pow(r, 2));
+        key4 = (initialKey * Math.pow(r, 3));
+        key5 = (initialKey * Math.pow(r, 4));
+
+        System.out.printf("%.2f ", initialKey);
+        System.out.printf("%.2f ", key2);
+        System.out.printf("%.2f ", key3);
+        System.out.printf("%.2f\n", key4);
+
+    }
+}

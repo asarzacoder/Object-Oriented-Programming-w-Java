@@ -1,0 +1,562 @@
+OBJECTS AND CLASSES
+----------------------------------------------- Information -------------------------------------------------
+Object: A grouping of data (variables) and operations that can be performed on that data (functions/methods).
+Class: Defines a new type that can group data and methods to form an object.
+
+------------------------------------------------- Vocabulary -------------------------------------------------
+Abstraction: To have user interact with an item without needing to understand all the details about how it works. (Encapsulation)
+Abstract Data Type (ADT): A data type where the implementation is hidden from the user.
+
+Public Member Methods (PMM): Methods that can be accessed from outside the class.
+Member Access Operator (Dot Operator): The period (.) used to invoke member methods of a class.
+Private Fields: Variables that member methods can access but class users cannot.
+Private Helper Methods: Help public methods perform tasks but cannot be accessed by class users.
+
+Mutator Method: A member method that modifies the value of a private field. (Setter).
+Accessor Method: A member method that retrieves the value of a private field without modifying it. (Getter).
+
+Constructor: Member method  that initializes all fields when an object is created.
+    - Has same name as class.                                                          public class Restaurant { ... }
+    - No return type, not even void.
+    Good practice is to explicitly define a default constructor or use field initialization to initialize all fields.
+
+TestBench: Program whose job is to thoroughly test another program (or portion) series of inputs/output checks known as test cases.
+Unit Testing: Create and run testbench for a specific unit like method or class.
+
+Reference Variable: A variable that refers to an object of a class type. A variable that holds the memory address of an object.
+Autoboxing: Automatic conversion of primitive types into their corresponding wrapper class objects.
+Unboxing: Automatic conversion of wrapper class objects back into their corresponding primitive types.
+
+ArrayList: Ordered list of reference type items that comes with Java.
+
+-------------------------------------------------- Example ---------------------------------------------------
+Public Member Methods (PMM): setName(), setRating(), print()
+  public class Restaurant {                                                    <- Class definition
+    // Class Fields and Methods are called Class Members.
+    private String name;                                                       <- Private Field
+    private int rating;                                                        <- Private Field
+
+    public Restaurant(){                                                       <- Constructor
+        name = "Unnamed";                                                      <- Initialize name field
+        rating = 0;                                                            <- Initialize rating field
+    }
+
+    public void setName(String name) {                                         <- Public Member Method (Setter)
+      this.name = name;
+    }
+    public void setRating(int rating) {                                        <- Public Member Method (Setter)
+      this.rating = rating;
+    }
+    public int getName() {                                                     <- Public Member Method (Getter)
+      return name;
+    }
+    public int getRating() {                                                   <- Public Member Method (Getter)
+      return rating;
+    }
+    public void print() {                                                      <- Public Member Method (Print)
+      System.out.println(buildLabel());                                           Calls Private Helper Method
+    }
+
+    private String buildLabel() {                                              <- Private Helper Method
+      return "Restaurant: " + name + ", Rating: " + rating + " stars.";
+    }
+  }
+
+--------------------------------------------- Using a class EXAMPLE ------------------------------------------
+Steps ->
+    1. Declare a reference variable of class type: Restaurant myRestaurant;
+    2. Assign the variable with an explicit allocated instance of class type: myRestaurant = new Restaurant();
+    3. Use dot operator to access member methods: myRestaurant.setName("Pasta Place");
+
+    Restaurant myRestaurant = new Restaurant();               <- Declare and allocate instance
+    myRestaurant.setName("Pasta Place");                      <- Call member method setName() using dot operator
+    myRestaurant.setRating(5);                                <- Call member method setRating() using dot operator
+    myRestaurant.print();                                     <- Call member method print() using dot operator
+
+-------------------------------------------- UML DIAGRAM + SYMBOLS --------------------------------------------
+                                  Soccer Team Class
+
+                                |---------------------|
+                                | - Name: String      |   <- Private Field
+                                | - Age: int          |   <- Private Field
+                                |---------------------|
+                                | + get/set Name()    |   <- Public Member Methods (Getter/Setter)
+                                | + get/set Age()     |   <- Public Member Methods (Getter/Setter)
+                                | + print()           |   <- Public Member Method (Print)
+                                |---------------------|
+
+--------------------------------------------- Defining Main Class ---------------------------------------------
+-> Main() is a static method that can access other static methods and static fields directly, but cannot directly
+access non-static member methods and non-static fields.
+-> To access non-static member methods from main(), program must create an instance of the class first.
+    Example:
+        public class BasicCar {                  | public static void main(String[] args) {
+            private int milesDriver;             |     BasicCar myMazda = new BasicCar();     <- Create instance for access
+                                                 |
+            public void drive(int tripMiles) {   |     myMazda.drive(100);                    <- Call member method using dot operator
+                milesDriver += tripMiles;        |
+            }                                    |
+        }                                        |
+
+------------------------------------------------ Unit Testing ------------------------------------------------
+Features of a good testbench:
+    - Automatic Checks: Values are compared as in testData.getNum1() != 100; for conciseness, only print message if test fails.
+    - Independent Test Cases: Each test case should not depend on results of another test case.
+    - 100% Coverage: Every line of code in the class being tested should be executed at least once.
+    - Border Cases: Test cases should include border cases (minimum, maximum, just inside/outside boundaries, typical values, error values).
+
+    Example Testbench:
+        public class StatsInfo {                          | public class StatsInfoTestBench {
+            private int num1;                             |     public static void main(String[] args) {
+            private int num2;                             |         StatsInfo testData = new StatsInfo();
+                                                          |         // Test for num1 setter and getter.
+            public void setNum1(int n) {                  |         testData.setNum1(100);
+                num1 = n;                                 |         if (testData.getNum1() != 100) {
+                    num2 = n;                             |             System.out.println("Error expecting 100, failed set/getNum1()");
+            }                                             |         }
+            public void setNum2(int n) {                  |         // Test for num2 setter and getter.
+                num2 = n;                                 |         testData.setNum2(200);
+            }                                             |         if (testData.getNum2() != 200) {
+                                                          |             System.out.println("Error expecting 200, failed set/getNum2()");
+            public int getNum1() {                        |         }
+                return num1;                              |         // Test for average calculation.
+            }                                             |         if (testData.getAverage() != 150) {
+                                                          |             System.out.println("Error expecting 150, failed getAverage()");
+            public int getNum2(){                         |         }
+                return num1; <-- Bug: Should return num2  |
+            }                                             |         testData.setNum1(-10);
+            public int getAverage() {                     |         testData.setNum2(0);
+                return (num1 + num2) / 2;                 |         if (testData.getAverage() != -5) {
+            }                                             |             System.out.println("Error expecting -5, failed getAverage()");
+        }                                                 |         }
+-------------------------------------------- Objects and References -------------------------------------------
+Example:
+    TimeHrMin travelTime;               <- Declare reference variable of class type TimeHrMim. No TimeHrMin object yet.
+    travelTime = new TimeHrMin();       <- Creates new TimeHrMin object and assigns its address to travelTime reference variable.
+                                           The new operator allocates memory for the object and calls the constructor to initialize it.
+
+-> Two or more reference variables can refer to the same object in memory.
+   Example:
+        TimeHrMin timeA = new TimeHrMin();   <- Create new TimeHrMin object, address assigned to timeA.
+        TimeHrMin timeB;                     <- Declare reference variable timeB but do not create new object.
+        timeB = timeA;                       <- Assign timeB to refer to same object as timeA.
+
+---------------------------------------------- 'this.' keyword -------------------------------------------------
+-> Objects member method is called using dot operator: objectReference.memberMethod();
+   Object reference is known as implicit parameter because compiler converts it to an explicit parameter: memberMethod(objectReference);
+-> Within member method, the implicit parameter can be accessed using 'this' keyword.
+
+    Example:
+        public class Box {
+            private int length;
+            private int width;
+
+            public void setDimensions(int length, int width) {
+                this.length = length;   <- 'this.length' refers to object's field, 'length' refers to method parameter.
+                this.width = width;     <- 'this.width' refers to object's field, 'width' refers to method parameter.
+            }
+        }
+
+    Calling overloaded constructors using 'this':
+        // You can just set both fields directly in the default constructor,
+           // but using 'this' to call the overloaded constructor avoids code duplication.
+        public class Box {
+            private int length;
+            private int width;
+
+            public Box() {
+                this(1, 1);            <- Calls overloaded constructor with parameters (1, 1).
+            }
+
+            public Box(int length, int width) {
+                this.length = length;
+                this.width = width;
+            }
+        }
+
+---------------------------------------- Primitive vs. Reference Types ----------------------------------------
+-> Reference variables of wrapper classes can be compared using equals() and compareTo() methods.
+
+    Example Given:
+    Integer num1 = 10;
+    Integer num2 = 8;
+    Integer num3 = 10;
+
+    // equals()
+    num1.equals(num2);        <- Returns false because 10 is not equal to 8.
+    num1.equals(num3);        <- Returns true because 10 is equal to 10
+
+    // compareTo()
+    num1.compareTo(num2);     <- Returns positive value because 10 is greater than 8.
+    num1.compareTo(num3);     <- Returns 0 because 10 is equal to
+    num1.compareTo(12);      <- Returns negative value because 10 is less than 12.
+
+-> Autoboxing Scenarios:
+   # Assign primitive type to wrapper class variables:
+
+     Double floorArea = 20.25;                  <- Primitive double 20.25 is autoboxed into Double object.
+        Character grade = 'A';                  <- Primitive char 'A' is autoboxed into Character object.
+
+   # Pass primitive type to a method with wrapper class parameter:
+
+     public void setRate(Double rate) { ... }   <- Method with Double parameter.
+
+-> Unboxing Scenarios:
+   # Assign wrapper class variable to primitive type:
+
+     Double num1 = 3.14;                     <- Double object.
+     Character letter1 = 'A';                <- Character object.
+
+     double num2 = num1;                     <- Double object is unboxed into primitive double.
+     char letter2 = letter1;                 <- Character object is unboxed into primitive char.
+
+    # Pass wrapper class variable to a method with primitive type parameter:
+
+      public void setInitial(char letter) { ... }   <- Method with primitive double parameter.
+
+      Character letter1 = 'A';                      <- Character object.
+      setInitial(letter1);                          <- Character object is unboxed into primitive char.
+
+    # Combine wrapper class and primitive types in expressions:
+
+      Integer num1 = 10;                    <- Integer object.
+      int num2 = 5;                         <- Primitive int.
+
+      int sum = num1 + num2;                <- Integer object is unboxed into primitive int for addition.
+
+-> Converting to Primitive Types: intValue(), doubleValue(), longValue(), charValue(), booleanValue(), etc.
+   Example Given -
+     Integer num1 = 14;
+     Double num2 = 3.5;
+     Double num3 = 5.6e2;
+
+     // intValue() Returns the value of wrapper class object as a primitive int.
+     num2.doubleValue();        <- Returns 3.5 as primitive double.
+
+     // doubleValue() Returns the value of wrapper class object as a primitive double.
+     num1.intValue();           <- Returns 14 as primitive int.
+
+     // longValue() Returns the value of wrapper class object as a primitive long.
+     num3.longValue();          <- Returns 560 as primitive long.
+
+-> Converting to and from Strings:
+   Example Given -
+     Integer num1 = 10;
+     Double num2 = 3.14;
+     String str1 = "32";
+     int regularInt = 20;
+
+     // toString() returns string representation of wrapper class object.
+        num1.toString();           <- Returns "10" as String.
+        num2.toString();           <- Returns "3.14" as String.
+
+     // Integer.toString(someInt) returns string representation of primitive int.
+        Integer.toString(regularInt);  <- Returns "20" as String.
+        Integer.toString(45);          <- Returns "45" as String.
+
+     // Integer.parseInt(someString) converts string to primitive int.
+        Integer.parseInt(str1);      <- Returns 32 as primitive int.
+        Integer.parseInt("100");     <- Returns 100 as primitive int.
+
+     // Integer.valueOf(someString) converts string to Integer object.
+        Integer.valueOf(str1);       <- Returns Integer object with value 32.
+        Integer.valueOf("100");      <- Returns Integer object with value 100.
+
+     // Integer.toBinaryString(someInt) returns binary string representation of primitive int.
+        Integer.toBinaryString(10);   <- Returns "1010" as String.
+        Integer.toBinaryString(32);    <- Returns "100000" as String.
+
+-------------------------------------------------- ArrayList --------------------------------------------------
+-> Each item in an ArrayList is known as an ELEMENT.
+-> Must import java.util.ArrayList to use the ArrayList class.
+
+    Declaration Example: ArrayList<Integer> values = new ArrayList<integer>();
+        - Creates reference variables vals that refers to a new Arraylist object that holds Integer objects.
+
+-> ArrayList size can grow to contain the desired elements.
+-> ArrayList does not support primitive types but rather reference tyles like Integer, Double, Character, etc.
+
+-> Common ArrayList Methods:
+    - add(element): Adds element to end of ArrayList.
+    - add(index, element): Adds element at specified index, shifting subsequent elements right.
+    - get(index): Returns element at specified index.
+    - set(index, element): Replaces element at specified index with new element.
+    - remove(index): Removes element at specified index, shifting subsequent elements left.
+    - size(): Returns number of elements in ArrayList.
+    - isEmpty(): Returns true if ArrayList has no elements, false otherwise.
+    - clear(): Removes all elements from ArrayList.
+
+------------------------------------------------- Example 1 -------------------------------------------------
+Example Program (ArrayList of objects) -> Review Restaurant
+
+ReviewSystem.java
+import java.util.ArrayList;                                         <- Import ArrayList class
+import java.util.Scanner;
+
+public class ReviewSystem {
+
+   public static void main(String [] args) {
+      Scanner scnr = new Scanner(System.in);
+      ArrayList<Review> reviewList = new ArrayList<Review>();       <- A list to store lots of review objects
+      Review currReview;                                            <- This will hold one review at a time (current review)
+      int currRating;                                               <- This will hold the current rating like 1, 2, 3, 4, or 5
+      String currComment;                                           <- This will hold the current comment like "Great food!"
+      int i;
+
+      System.out.println("Type rating + comments. To end: -1");
+      currRating = scnr.nextInt();                                  <- Reads the first rating
+      while (currRating >= 0) {                                     <- Keep going until user enters a number less than 0
+         currReview = new Review();                                 <- Make a new empty review object
+         currComment = scnr.nextLine();                             <- Reads the comment for the current review
+         currReview.setRatingAndComment(currRating, currComment);   <- Set the rating and comment for the current review
+         reviewList.add(currReview);                                <- Add the current review to the list of reviews
+         currRating = scnr.nextInt();                               <- Read the next rating
+      }
+
+      // Output all comments for given rating
+      System.out.println();
+      System.out.println("Type rating. To end: -1");
+      currRating = scnr.nextInt();                                  <- Read the first rating to search for
+      while (currRating != -1) {
+         for (i = 0; i < reviewList.size(); ++i) {                  <- Step through each review in the list
+            currReview = reviewList.get(i);                         <- Get the current review from the list
+            if (currRating == currReview.getRating()) {             <- If the ratings match, print the comment
+               System.out.println(currReview.getComment());
+            }
+         }
+         currRating = scnr.nextInt();
+      }
+   }
+}
+
+Review.java
+public class Review {
+   private int rating = -1;                                             <- This field holds the rating like 1, 2, 3, 4, or 5
+   private String comment = "NoComment";                                <- This field holds the comment like "Great food!"
+
+   public void setRatingAndComment(int revRating, String revComment) {  <- Mutator method to set both rating and comment
+      rating = revRating;
+      comment = revComment;
+   }
+   public int getRating() { return rating; }                            <- Accessor method to get the rating
+   public String getComment() { return comment; }                       <- Accessor method to get the comment
+}
+-------------------------------------------------- Example 2 --------------------------------------------------
+Example Program (Class with ArrayList) -> Review Restaurant
+
+/* ====================================
+* Main Method Class
+* Calls Reviews class to run methods to
+*   input reviews, get average rating, and
+*   print comments for given ratings.
+/* ====================================
+ReviewSystem.java
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ReviewSystem {
+
+   public static void main(String [] args) {
+      Scanner scnr = new Scanner(System.in);
+      Reviews allReviews = new Reviews();                           <- Create Reviews object to hold all reviews
+      int currRating;                                               <- This will hold the current rating like 1, 2, 3, 4, or 5
+
+      System.out.println("Type rating + comments. To end: -1");
+      allReviews.inputReviews(scnr);                                <- Read and store all reviews from user
+
+      System.out.println("\nAverage rating: ");
+      System.out.println(allReviews.getAverageRating());            <- Print average rating of all reviews
+
+      // Output all comments for given rating
+      System.out.println("\nType rating. To end: -1");
+      currRating = scnr.nextInt();                                  <- Read the first rating to search for
+      while (currRating != -1) {                                    <- Keep going until user enters -1
+         allReviews.printCommentsForRating(currRating);             <- Print all comments for the given rating
+         currRating = scnr.nextInt();                               <- Read the next rating to search for
+      }
+   }
+}
+
+/* ====================================
+* Reviews Class
+* Holds an ArrayList of Review objects
+* Has methods to input reviews, get average rating,
+*   and print comments for a given rating.
+/* ====================================
+Reviews.java
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Reviews {
+   private ArrayList<Review> reviewList = new ArrayList<Review>();  <- List to hold all Review objects
+
+   public void inputReviews(Scanner scnr) {                         <- Method to read and store reviews from user
+      Review currReview;                                            <- This will hold one review at a time (current review)
+      int currRating;                                               <- This will hold the current rating like 1, 2, 3, 4, or 5
+      String currComment;                                           <- This will hold the current comment like "Great food!"
+
+      currRating = scnr.nextInt();                                  <- Reads the first rating
+      while (currRating >= 0) {
+         currReview = new Review();                                 <- Make a new empty review object
+         currComment = scnr.nextLine(); // Gets rest of line        <- Reads the comment for the current review
+         currReview.setRatingAndComment(currRating, currComment);   <- Set the rating and comment for the current review
+         reviewList.add(currReview);                                <- Add the current review to the list of reviews
+         currRating = scnr.nextInt();                               <- Read the next rating
+      }
+   }
+
+   public void printCommentsForRating(int currRating) {             <- Method to print all comments for a given rating
+      Review currReview;                                            <- This will hold one review at a time (current review)
+      int i;
+
+      for (i = 0; i < reviewList.size(); ++i) {
+         currReview = reviewList.get(i);                            <- Get the current review from the list
+         if (currRating == currReview.getRating()) {                <- If the ratings match, print the comment
+            System.out.println(currReview.getComment());            <- Print the comment
+         }
+      }
+   }
+
+   public int getAverageRating() {                                  <- Method to compute and return average rating of all reviews
+      int ratingsSum;
+      int i;
+
+      ratingsSum = 0;
+      for (i = 0; i < reviewList.size(); ++i) {
+         ratingsSum += reviewList.get(i).getRating();
+      }
+      return (ratingsSum / reviewList.size());
+   }
+}
+
+/* ====================================
+* Review Class
+* Holds rating and comment for a single review
+* Has Setter and Getter methods.
+/* ====================================
+Review.java
+public class Review {
+   private int rating = -1;
+   private String comment = "NoComment";
+
+   public void setRatingAndComment(int revRating, String revComment) {
+      rating = revRating;
+      comment = revComment;
+   }
+   public int getRating() { return rating; }
+   public String getComment() { return comment; }
+}
+---------------------------------------- ArrayList ADT List Operations ----------------------------------------
+Common List Operations: ArrayList<Integer> teamNums = new ArrayList<Integer>();
+                        Assume: teamNums contains [5, 9, 23, 11, 14]
+
+-------------|-------------------------------------|-----------------------------------------------------------
+Operation    | Description                         | Example
+-------------|-------------------------------------|-----------------------------------------------------------
+get()        | Returns element at specified index. | teamNums.get(2);          Returns 23
+             | T.get(int index)                    |
+-------------|-------------------------------------|-----------------------------------------------------------
+set          | Replaces element at specified index | teamNums.set(1, 10);
+             | T.set(int index, E element)         | Replaces 9 with 10 -> [5, 10, 23, 11, 14]
+-------------|-------------------------------------|-----------------------------------------------------------
+size()       | Returns number of elements in list. | teamNums.size();          Returns 5
+             | T.size()                            |
+-------------|-------------------------------------|-----------------------------------------------------------
+isEmpty()    | Returns true: list has no elements  | teamNums.isEmpty();       Returns false
+             | T.isEmpty()                         |
+-------------|-------------------------------------|-----------------------------------------------------------
+clear()      | Removes all elements from the list. | teamNums.clear();         teamNums is now []
+             | T.clear()                           |
+-------------|-------------------------------------|-----------------------------------------------------------
+add()        | Adds element to end of the list.    | teamNums.add(18);
+             | T.add(E element)                    |
+             | Adds element at specified index     | teamNums.add(2, 20)
+             | T.add(int index, E element)         | Inserts 20 at index 2 -> [5, 10, 20, 23, 11, 14, 18]
+-------------|-------------------------------------|-----------------------------------------------------------
+remove()     | Removes element at specified index. | teamNums.remove(3);
+             | T.remove(int index)                 | Removes 23 -> [5, 10, 20, 11, 14, 18]
+             | Removes first occur. of element.    | teamNums.remove(Integer.valueOf(10));
+             | T.remove(E element)                 | Removes 10 -> [5, 20, 11, 14, 18]
+-------------|-------------------------------------|-----------------------------------------------------------
+
+---------------------------------------- Java Documentation for Classes ----------------------------------------
+-> Javadoc tools parses source code along with specially formatted comments to generate documentation.
+-> The documentation generated by Javadoc is known as an API (Application Programming Interface) for classes and methods.
+-> The specially formatted comments for Javadoc are called Doc comments.
+    - Doc comments start with /** and end with */
+    - Placed immediately before class, method, or field declaration.
+    - Can include HTML tags for formatting.
+
+-> Common Javadoc Tags:
+    - @param: Describes a method parameter. (Method, constructor)
+    - @return: Describes the return value of a method. (Method)
+    - @author: Specifies the author of the class. (Classes)
+    - @version: Specifies the version of the class. (Classes)
+    - @see: Provides a reference to related classes or methods. (Classes, methods)
+
+----------------------------------------- Parameters of Reference Types -----------------------------------------
+-> Instances of wrapper classes [Integer, Double, String] are defined IMMUTABLE.
+   - Meaning that a programmer can't modify the object's contents after initialization, new objects must be created instead.
+    Example:
+        Integer travelTime = 10;    <-> Wrapper Class does this in the back: Integer travelTime = Integer.valueOf(10)
+
+            travelTime -> 10        <- travelTime points to object(box) that contains 10
+
+        travelTime = 11;            <- new object(box) is created that contains 11
+
+            travelTime -> 11        <- traveltime now points to object(box) that contains 11
+
+    - This is what they mean by immutable.
+
+------------------------------------------ Static Fields and Methods -------------------------------------------
+Static: Indicates a variable is allocated in memory only once during a program's execution.
+    - Have a global scope, it can be accessed from anywhere in a program.
+
+Static Field: A field of a class.
+    - Independent of any class object, can be accessed without creating a class object.
+    - Declared and initialized in the class definition.
+    - Static field is accessed using the field name.
+    - Public static field can be accessed outside the class using dot notation: ClassName.fieldName
+
+** Static fields = Class Variables      | ** non-static fields = instance variables
+
+Example:
+    public class NewStores {
+       public static void main(String[] args) {
+          Store store1 = new Store("Macy's", "Department");                 <- Object 1
+          Store store2 = new Store("Albertsons", "Grocery");                <- Object 2
+          Store store3 = new Store("Ace", "Hardware");                      <- Object 3
+
+          System.out.println("Store 1's ID: " + store1.getId());
+          System.out.println("Store 2's ID: " + store2.getId());
+          System.out.println("Store 3's ID: " + store3.getId());
+          System.out.println("Next ID: " + Store.nextId);
+       }
+    }
+
+    public class Store {
+       // Declare and initialize public static field                        Output:
+       public static int nextId = 101;                                              Store1
+                                                                            store1.name -> Macy's
+       // Define private fields                                                   .type -> Department
+       private String name;                                                       .id   -> 101
+       private String type;
+       private int id;                                                              Store2
+                                                                            store2.name -> Albertsons
+       public Store(String storeName, String storeType) {                         .type -> Grocery
+          name = storeName;                                                       .id   -> 102
+          type = storeType;
+          id = nextId;                                                              Store3
+                                                                            store3.name -> Ace
+          ++nextId;  ** Increment each time a Store object is created             .type -> Hardware
+       }                                                                          .id   -> 103
+
+       // Static member method used to access and mutate
+          // private static fields from outside the class.
+       public static int getNextId() {
+          return nextId
+       }
+    }
+
+
+

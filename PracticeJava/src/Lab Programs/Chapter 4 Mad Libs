@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+// Chapter 4 Loops
+
+/**
+ * This program takes integer and strings from input until string equals "quit".
+ * Output -> Eating "Integer" "Strings" a day keeps you happy and healthy.
+ */
+
+public class Practice {
+   public static void main(String[] args) {
+       Scanner scnr = new Scanner(System.in);
+
+       // Boolean variable determining if String is quit.
+       boolean isQuit = false;
+
+       // Variable for input.
+       String items = scnr.next();
+       int num = scnr.nextInt();
+
+       while (!isQuit) {
+
+           if (items.equals("quit")) {
+               isQuit = true;
+               return;
+           }
+           else {
+               System.out.printf("Eating %d %s a day keeps you happy and healthy.\n", num, items);
+           }
+
+           // Variable update for input.
+           items = scnr.next();
+           num = scnr.nextInt();
+       }
+       scnr.close();
+   }
+}
