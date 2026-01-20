@@ -1,0 +1,258 @@
+                                                RECURSION
+Recursive Algorithm -> Algo that breaks the problem into smaller subproblems and applies the same algorithm to
+    solve the smaller subproblems.
+
+    Example: Mowing lawn algo       ->      + Mow the lawn
+                                                - Mow the front yard -> Mow the left front
+                                                                     -> Mow the right front
+                                                - Mow the back yard  -> Mow the left back
+                                                                     -> Mow the right back
+
+    + [BASE CASE] + describing how to actually do something.
+
+                                            + Mow the lawn
+                                                - If lawn is less than 100 square meters
+                                                    -> push the lawnmower left-to-right in adjacent rows
+                                                - else
+                                                    -> Mow one half of the lawn
+                                                    -> Mow the other half of the lawn
+-----------------------------------------------------------------------------------------------------------------------
+                                              Recursive Methods
+-----------------------------------------------------------------------------------------------------------------------
+-> Methods may call other methods including itself, method self calling is a recursive method.
+
+    public class CountdownTimer {                               public static void main(String[] args) {
+        public static void countDown(int countInt) {                countDown(2);
+            if (countInt <= 0) {                                }
+                System.out.println("GO!");
+            }                                                   -----------------------------------------
+            else {                                              Output: 2, 1, GO!
+                System.out.print(countInt);
+                countDown(countInt - 1);
+            }
+        }
+    }
+-----------------------------------------------------------------------------------------------------------------------
+                                            Creating Recursive Method
+-----------------------------------------------------------------------------------------------------------------------
+-> Write the base case: (if) case that returns a value without performing a recursive call.
+    + Programmer may write this part of method first then test.
+    + There may be multiple base cases.
+-> Write the recursive case: Add the recursive case to the method.
+
+-> Coding Example:
+Write code to complete doublePennies()'s base case. Sample output for below program with inputs 1 and 10.
+Output: Number of pennies after 10 days: 1024
+
+import java.util.Scanner;
+
+    public class CalculatePennies {
+    // Returns number of pennies if pennies are doubled numDays times
+       public static long doublePennies(long numPennies, int numDays) {
+          long totalPennies;
+
+          if (numDays == 0) {
+             return numPennies;
+          }
+          else {
+             totalPennies = doublePennies((numPennies * 2), numDays - 1);
+          }
+
+          return totalPennies;
+       }
+
+    // Program computes pennies if you have 1 penny today,
+    // 2 pennies after one day, 4 after two days, and so on
+       public static void main (String [] args) {
+          Scanner scnr = new Scanner(System.in);
+          long startingPennies;
+          int userDays;
+
+          startingPennies = scnr.nextLong();
+          userDays = scnr.nextInt();
+          System.out.println("Number of pennies after " + userDays + " days: "
+               + doublePennies(startingPennies, userDays));
+       }
+    }
+
+-> Coding Example w/ two base cases:
+Write code to complete printFactorial()'s recursive case. Sample output if input is 5.
+Output: 5! = 5 * 4 * 3 * 2 * 1 = 120
+
+import java.util.Scanner;
+
+public class RecursivelyPrintFactorial {
+   public static void printFactorial(int factCounter, int factValue) {
+      int nextCounter;
+      int nextValue;
+
+      if (factCounter == 0) { // Base case: 0! = 1
+         System.out.println("1");
+      }
+      else if (factCounter == 1) { // Base case: Print 1 and result
+         System.out.println(factCounter + " = " + factValue);
+      }
+      else { // Recursive case
+         System.out.print(factCounter + " * ");
+         nextCounter = factCounter - 1;
+         nextValue = nextCounter * factValue;
+
+         printFactorial(nextCounter, nextValue);
+
+      }
+   }
+
+   public static void main (String [] args) {
+      Scanner scnr = new Scanner(System.in);
+      int userVal;
+
+      userVal = scnr.nextInt();
+      System.out.print(userVal + "! = ");
+      printFactorial(userVal, userVal);
+   }
+}
+-----------------------------------------------------------------------------------------------------------------------
+                                          Recursive Algo: BINARY SEARCH
+-----------------------------------------------------------------------------------------------------------------------
+-> Begins at the midpoint of the range and halves the range search after each guess.
+    + Binary search only works if the list is already sorted from A-Z.
+
+    - Is it 50 (the middle of 0-100)? Lower
+    - Is it 25 (the middle of 0-50)? Higher
+    - Is it 38 (the middle of 26-50)? Lower
+    - Is it 32 (the middle of 26-38)?
+
+Example Code: numerically
+    + The recursive method has an if-else statement.
+    + if branch ends the recursion (known as the base case).
+    + else branch has recursive calls.
+
+============================== Main ===================================
+import java.util.Scanner;
+
+   public static void main(String[] args) {
+      Scanner scnr = new Scanner(System.in);
+
+      // Print game objective, user input commands
+      System.out.println("Choose a number from 0 to 100.");
+      System.out.println("Answer with:");
+      System.out.println("   l (your num is lower)");
+      System.out.println("   h (your num is higher)");
+      System.out.println("   any other key (guess is right).");
+
+      // Call recursive function to guess number
+      guessNumber(0, 100, scnr);
+   }
+}
+============================== Main ===================================
+public class NumberGuessGame {
+   public static void guessNumber(int lowVal, int highVal, Scanner scnr) {
+      int midVal;            // Midpoint of low..high
+      char userAnswer;       // User response
+
+      midVal = (highVal + lowVal) / 2;
+
+      // Prompt user for input
+      System.out.print("Is it " + midVal + "? (l/h/y): ");
+      userAnswer = scnr.next().charAt(0);
+
+      if ((userAnswer != 'l') && (userAnswer != 'h')) { // Base case: found number
+         System.out.println("Thank you!");
+      }
+      else {                                            // Recursive case: split into lower OR upper half
+         if (userAnswer == 'l') {                       // Guess in lower half
+            guessNumber(lowVal, midVal, scnr);            // Recursive call
+         }
+         else {                                         // Guess in upper half
+            guessNumber(midVal + 1, highVal, scnr);           // Recursive call
+         }
+      }
+   }
+=======================================================================
+
+Example Code: strings
+============================== Main ===================================
+import java.util.ArrayList;
+
+    public static void main(String[] args) {
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Adams, Mary");
+        names.add("Carver, Michael");
+        names.add("Domer, Hugo");
+        names.add("Fredericks, Carlos");
+        names.add("Li, Jie");
+
+        String target = "Domer, Hugo";
+
+        int pos = findMatch(names, target, 0, names.size() - 1);
+        System.out.println(pos);  // prints 2 (or -1 if not found)
+    }
+}
+============================== Main ===================================
+
+public class SmallBinarySearchRec {
+
+    // Returns index if found, else -1
+    public static int findMatch(ArrayList<String> list, String target, int low, int high) {
+        if (low > high) return -1;                 // base case: nothing left to search
+
+        int mid = (low + high) / 2;
+
+        if (target.equals(list.get(mid))) return mid;  // base case: found it
+
+        if (target.compareTo(list.get(mid)) < 0) {
+            return findMatch(list, target, low, mid - 1);   // search left half
+        } else {
+            return findMatch(list, target, mid + 1, high);  // search right half
+        }
+    }
+=======================================================================
+
+-----------------------------------------------------------------------------------------------------------------------
+                                        Recursion Math Methods
+-----------------------------------------------------------------------------------------------------------------------
+-> Fibonacci Sequence: each number is the sum of the two preceding ones.
+    + 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+
+    Main {                          |   computeFib(fibNum1, fibNum2, count) {
+        computeFib(0, 1, count);    |       if (count == 0) { return; }     <- BASE CASE
+    }                               |       computeFib(fibNum2, fibNum1 + fibNum2, count - 1); <- RECURSIVE CASE
+
+    computeFib(fibNum2, fibNum1 + fibNum2, count - 1):
+        + fibNum2 = next Fibonacci number.
+        + fibNum1 + fibNum2 = sum of last two Fibonacci numbers, becomes fibNum2 in next call.
+        + count   = how many numbers left to compute.
+
+-> Greatest Common Divisor (GCD): Largest number that divides evenly into two numbers.
+    + GCD (12, 8) = 4 -> GCD (8, 4) = 4 -> GCD (4, 4) = Equal -> GCD is 4.
+
+    Base Case: Two numbers are equal.
+    Recursive Case: Subtract smaller number from larger number and call GCD again.
+
+    Main -> GCD (num1, num2);
+
+    GCD (num1, num2) {
+        if (num1 == num2) { return num1; }     <- BASE CASE
+        else {
+            if (num1 > num2) {
+                return GCD (num1 - num2, num2);   <- RECURSIVE CASE (Checking which number is larger)
+            } else {
+                return GCD (num1, num2 - num1);   <- RECURSIVE CASE (Checking which number is larger)
+            }
+        }
+    }
+
+-----------------------------------------------------------------------------------------------------------------------
+                                                EXPLORATION
+-----------------------------------------------------------------------------------------------------------------------
+-> WORD SCRAMBLE
+    + Printing all possible arrangements of the letters in a given word.
+        Ex: "cat" -> "cat", "cta", "act", "atc", "tca", "tac"
+    
+-----------------------------------------------------------------------------------------------------------------------
+                                                  STACK OVERFLOW
+-----------------------------------------------------------------------------------------------------------------------
+-> Each recursive call uses some memory on the call stack.
+    + If there are too many recursive calls before reaching the base case, the program runs out of memory.
+    + This is called a stack overflow.
+    + To avoid stack overflow, ensure that each recursive call progresses toward the base case.

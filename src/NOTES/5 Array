@@ -6,3 +6,148 @@ Overview: Array is a variable that stores a list of data items, with each item b
     -> Some other languages use a construct similar to an array called a vector.
 
 -------------------------------------------------- Definitions --------------------------------------------------
+
+
+-------------------------------------- Declarations and Accessing Elements --------------------------------------
+-> Array reference variable declaration and allocation
+
+    dataType[] arrayName = new dataType[numOfElements];
+
+    - [] after data type indicates variable is an array reference.
+    - new keyword creates space in memory to store array with specific number of elements.
+    - [] these are brackets: in array access the number in the brackets are called index of corresponding element.
+
+    int[] gameScores;               -> You can declare array reference without allocating the array.
+    ...                             -> If the size of an array is known, good practice is to combine the array
+    gameScores = new int[4];           reference variable declaration with array allocation.
+
+    Example: int[] agePerson = new int[3]       -> Declaration array holds integer values (age) with 3 elements (datas)
+        agePerson[0] = 18;                      -> Accessing the second element: System.out.println(agePerson[1]))
+        agePerson[1] = 24;                         Prints - 24
+        agePerson[2] = 22;
+
+-> By default array elements are initialized to zeros, but you can initialize them with non-zeros.
+
+    int[] array = {18, 24, 22};     -> uses curly brackets and don't need keyword new.
+
+------------------------------------------------ Loops and Arrays ------------------------------------------------
+-> Using loops to fill in elements of arrays
+
+    numElements = 8;                                -> .length() will use this
+    int[] numbers = new int[numElements];
+
+    // USER ENTER ELEMENT VALUES
+    for (int i = 0; i < array.length; i++) {        -> .length() used here
+        enterVal[i] = scnr.nextInt();               -> User enter phase until end of array
+    }
+
+    // PRINT OUT ARRAY
+    for (int i = 0; i < array.length; i++) {        -> .length() used here
+        System.out.println(array[i]);               -> Prints each element until end of array
+    }
+
+    // PRINT EACH ELEMENT THE SAME EXCEPT LAST      -> This prints each element the same except last
+    if (i == array.length - 1; i++) {
+        statements ....
+    }
+    else {
+        statements ....
+    }
+
+    // PRINT REVERSE
+    for (int i = array.length - 1; i >= 0; i--) {   -> i begins at .length() - 1 because .length() will be out of bounds
+        System.out.println(array[i]);                  i >= 0 because i > = will cause not to enter very first element
+    }
+
+--------------------------------------------------- SWAPPING ---------------------------------------------------
+-> Swapping method uses temporary variable created by the programmer to swap two variables data or elements in array
+
+    int temp = 0;                   temp = x;               -> temp now holds a copy of x value
+    int x = 10;                     x = y;                  -> x takes y's value
+    int y = 20;                     y = temp;               -> y takes temp's value that had x's value.
+
+-> Most swaps are performed between two elements in a list.
+
+    Example: Copying an array to another
+
+      oldArray = {10, 20, 30 40}  |   Expected Output = {20, 30, 40, 10}
+
+      for (i = 0; i < oldArray.length - 1; i++) {                 -> This traverse into 3 elements only
+          if (i == 0) {                                           -> First element should copy oldScores[1] to last of newScores
+             newArray[newArray.length - 1] = oldArray[0];         -> Copies old array first element to last
+             newArray[i] = oldArray[i + 1];
+          } else {
+               newArray[i] = oldArray[i + 1];
+          }
+      }
+
+    Example: Reversing an array
+
+        for (int i = 0; i < (array.length/2); i++) {
+            temp = userVals[i];                                 -> Temp for swapping    -> temp = x
+            userVals[i] = userVals[userVals.length - 1 - i]     -> First part of swap   -> x = y
+            userVals[userVals.length - 1 - i] = temp;           -> Complete swap        -> y = temp
+        }
+
+-------------------------------------------- Two Dimensional Arrays --------------------------------------------
+-> Declaration
+
+    int[][] array = new int[ROW][COLUMN]                    -> R * C = Total Elements
+
+    Example: int[][] array = new int[2][3]                  -> Writing to elements
+
+                [COLUMNS(3)]
+         0            1           2
+   -------------------------------------
+   |  [0][0]   |   [0][1]  |   [0][2]  |                    -> array[0][0] = 55;
+   -------------------------------------   [ROWS(2)]
+   |  [1][0]   |   [1][1]  |   [1][2]  |                    -> array[1][1] = 77;
+   -------------------------------------
+
+-> Initialization
+
+    ** Remember that row and columns begin at index 0 and not 1 **
+
+    int[][] array = { {22, 44, 66}, {97, 98, 99} };
+
+    // Better visualization
+    int[][] array = { {22, 44, 66},     -> Row 00, 01, 02
+                      {97, 98, 99}      -> Row 10, 11, 12
+                    };
+
+--------------------------------------- For Loop and Two Dimensional Array ---------------------------------------
+Example: int[][] array = new int[3 rows][4 columns]
+
+    -> Two Steps:                                       -> Two for loops [i][j]
+        1. Pick a row                                       1. Outside loop walks through rows [i]
+        2. Inside the row, pick a column                    2. Inside loop walks through columns [j]
+
+    for (int i = 0; i < array.length; i++) {            -> ROWS
+        for (int j = 0; j < array[i].length; j++) {     -> COLUMNS (Array[row].columns)
+            if (array[i][j] > maxMiles) {
+                maxMiles = array[i][j];
+            }
+            else if (array[i][j] < minMiles) {
+                minMiles = array[i][j];
+            }
+        }
+    }
+
+---------------------------------------------- Enhanced For Loops ----------------------------------------------
+-> A for loop that iterates through each element in an array.
+    - Also known as for each loop
+    - Declares a new loop variable
+    - Enhanced for loop only allows elements to be accessed forward from the first to last element
+
+    Example:
+        String[] teamRoster = new String[3];
+
+        teamRoster[0] = "Mike";
+        teamRoster[1] = "Jake";
+        teamRoster[2] = "Toni";
+
+        // Declares new variable inside the enhanced loop
+        for (String playerName : teamRoster) {      <->     for (int i = 0; i < teamRoster.length; i++) {
+            System.out.println(playerName);                     String playerName = teamRoster[i]''
+        }                                                       System.out.println(playerName);
+                                                            }

@@ -1,0 +1,242 @@
+                                            Inheritance
+Defined -> A derived class or (subclass) is a class derived from another class called [BASE CLASS] or [SUPERCLASS].
+    + Any class may serve as a base class.
+    + Derived class is to inherit the properties of the base class. (Concept called Inheritance).
+    + An object declared of a derived class type has access to all the public members of the derived class + base class.
+
+Declaration ->
+    + using extends after a derived class name followed by the base class name
+
+    (Base Class)                                        (Derived Class)
+    public class GenericItem { Body; }                  public class ProduceItem extends GenericItem { Body; }
+
+Inheritance Scenarios ->
+    + A derived class can serve as a base class for another class.
+    + A class can serve as a base class for multiple derived classes.
+    + Derived classes inherits the super base class member fields and methods.
+    * A class can only be derived from one base class and not more than one.
+-----------------------------------------------------------------------------------------------------------------------
+RULES ->
+    + Member access: members of derived class have access to public member methods of the base class but not to its
+      private members (fields).
+    + PROTECTED (access specifier): provides access to derived class and all classes in the same package.
+-----------------------------------------------------------------------------------------------------------------------
+Derived Classes -> Independent Class vs Derived Class
+-----------------------------------------------------------------------------------------------------------------------
+  (Independent Class)                                                           (Derived Class)
+    - ProduceItem -                     - Generic Item -                        - ProduceItem -
+       itemName                             itemName                             expirationDate
+     itemQuantity                         itemQuantity
+     expirationDate                                              Implement
+    --------------- <- COPY CODE ----|  -----------------   |--- Difference ->   ---------------
+       setName()                            setName()                           setExpiration()
+     setQuantity()                        getQuantity()                         getExpiration()
+      printItem()                          printItem()
+    setExpiration()
+    getExpiration()
+
+-----------------------------------------------------------------------------------------------------------------------
+Example Code -> Base Class + Derived Class
+-----------------------------------------------------------------------------------------------------------------------
+public class GenericItem {
+    private String itemName;
+    private int itemQuantity;
+
+    public void setName (String newName) {
+        itemName = newName;
+    }
+
+    public void setQuantity (int newQty) {
+        itemQuantity = newQty;
+    }
+
+    public void printItem() {
+        System.out.println(itemName + " " + itemQuantity);
+    }
+}
+
+/**
+* This class has access to GenericItem private fields and public member methods.
+**/
+public class ProduceItem extends GenericItem {
+    private String expirationDate;
+
+    public void setExpiration (String newDate) {
+        expirationDate = newDate;
+    }
+
+    public String getExpiration () {
+        return expirationDate;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------
+                                    ACCESS SPECIFIERS FOR CLASS MEMBERS
+
+      --------------------------------------------------------------------------------------------------------
+      |  Specifier   |                           Description                                                 |
+      --------------------------------------------------------------------------------------------------------
+      |  private     |  Accessible by self.                                                                  |
+      --------------------------------------------------------------------------------------------------------
+      | protected    |  Accessible by self, derived class, and other classes in the same package.            |
+      --------------------------------------------------------------------------------------------------------
+      | public       |  Accessible by self, derived class and everyone else.                                 |
+      --------------------------------------------------------------------------------------------------------
+      | no specifier |  Accessible by self and other classes in the same package.                            |
+      --------------------------------------------------------------------------------------------------------
+
+Class Definitions ->
+    + public: A class can be used by every class in program regardless of the package in which either is defined.
+    + no specifier: A class can be used only in other classes within the same package, known as package-private.
+
+-----------------------------------------------------------------------------------------------------------------------
+                                            @OVERRIDE
+-----------------------------------------------------------------------------------------------------------------------
+Defined -> When a derived class defines a member method that has the same name and parameter as a base class method.
+
+    public class base {                            | public class derivedClass {
+        public String getDescription() {           |    public String getDescription() {
+            return name + " -- " + address;        |        return name + " -- " + address + "Rating: " + rating;
+        }                                          |    }
+    }                                              | }
+
+Error Causing -> when @Override is in play
+    + Removing one of these methods will have @Override cause an error.
+    + Changing and adding a parameter will cause error.
+    + Changing base method from public to private will cause error.
+
+Calling a base class method from @Override method ->
+    + You can call a base class method from an @Override method by using the "super" keyword.
+    + "super" keyword is a reference variable used to call the parent class's methods or constructors.
+
+    Example: Cleaner way instead of rewriting the same method.
+
+        public class Restaurant extends Business {
+            ...
+            @Override
+            public String getDescription() {
+                return super.getDescription() + "\n Rating: " + rating;
+            }
+        }
+
+-----------------------------------------------------------------------------------------------------------------------
+                                    OBJECT CLASS -> toString() and equals()
+-----------------------------------------------------------------------------------------------------------------------
+-> In Java, every class automatically comes from one SUPER_PARENT class called Object.
+   + Even if you don't write [extends Object]. (Java still treats your class like it does).
+   public class Business { ... } <--> public class Business extends Object { ... }
+
+-> What Object gives you:
+   + Built-in methods that all classes get for free.
+
+[toString()]
+    + Java uses this when it tries to turn an Object into text.
+    + By default returns: java.lang.Object@372f&a8d
+     - class name
+     - plus a code that represents where it sits in memory
+    + If @Override, toString() returns actual String without memory
+
+      @Override                                     Output:
+      public String toString() {                        Friends Cafe -- 500 W 2nd Ave
+        return name + " -- " + address
+      }
+
+[equals(otherObject)]
+    + Checks if two variables are pointing to the exact same object.
+    Example(false):
+        Business a = new Business();
+        Business b = new Business();
+        - Even if a and b have the same name and address,
+          a.equals(b) is false by default because they are two separate objects.
+    + If @Override, .equals() checks and compares the Strings.
+      Business b1 = new Business("Friends Cafe");
+      Business b2 = new Business("Friends Cafe");
+
+      - @Override = true
+      - NO @Override = false (They point to two different object)
+      
+-----------------------------------------------------------------------------------------------------------------------
+                                                    POLYMORPHISM
+-----------------------------------------------------------------------------------------------------------------------
+Defined -> refers to determining which program behavior to execute depending on data types.
+    + Plain explanation: One variable, different behavior, same method name, different version runs.
+-----------------------------------------------------------------------------------------------------------------------
+Example Code: Base Class + Derived Class
+
+    GenericItem.java:                                               <- Parent class (Base Class)
+    public class GenericItem {
+       public void setName(String newName) {
+          itemName = newName;
+       }
+
+       public void setQuantity(int newQty) {
+          itemQuantity = newQty;
+       }
+
+       public void printItem() {                                    <- output: Smith Cereal 9
+          System.out.println(itemName + " " + itemQuantity);
+       }
+
+       protected String itemName;
+       protected int itemQuantity;
+    }
+
+    ProduceItem.java:
+    public class Produce Item extends GenericItem {                 <- Derived Class (Child Class)
+       public void setExpiration(String newDate) {
+          expirationDate = newDate;
+       }
+
+       public String getExpiration() {
+          return expirationDate;
+       }
+
+       @Override                                                    <- KEY: ProduceItem overrides printItem()
+       public void printItem() {                                       output: Apple 40 (Expires: May 5, 2012)
+          System.out.println(itemName + " " + itemQuantity
+                                        + " (Expires: " + expirationDate + ")");
+       }
+
+       private String expirationDate;
+    }
+-----------------------------------------------------------------------------------------------------------------------
+Example Code: Main Class
+
+    ItemInventory.java:
+    import java.util.ArrayList;
+
+    public class ItemInventory {
+       public static void main(String[] args) {
+          GenericItem genericItem1;
+          ProduceItem produceItem1;
+          ArrayList<GenericItem> inventoryList = new ArrayList<GenericItem>();  <- Polymorphism
+          int i;                                                                   Holds: GenericItem objects
+                                                                                          ProduceItem objects (derived)
+          genericItem1 = new GenericItem();
+          genericItem1.setName("Smith Cereal");
+          genericItem1.setQuantity(9);
+
+          produceItem1 = new ProduceItem();
+          produceItem1.setName("Apple");
+          produceItem1.setQuantity(40);
+          produceItem1.setExpiration("May 5, 2012");
+
+          genericItem1.printItem();
+          produceItem1.printItem();
+
+          // More common: Collection (e.g., ArrayList) of objs
+          // Polymorphism -- Correct  printItem()  called
+          inventoryList.add(genericItem1);                                      <- You add both into the list
+          inventoryList.add(produceItem1);
+          System.out.println("\nInventory: ");
+          for (i = 0; i < inventoryList.size(); ++i) {
+             inventoryList.get(i).printItem();                                  <- We call this and it prints correct
+          }                                                                        output depending on object
+       }
+    }
+
+
+
+
+
+

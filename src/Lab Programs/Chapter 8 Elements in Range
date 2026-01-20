@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+/**
+ *
+ * Author: Armando Sarza
+ * File Description: Program outputs a list of numbers that are between the
+ *                  lower bound and upperbound (inclusive).
+ * - First input integer indicates the number of following integers.
+ * - After the list of numbers, the next two num indicates the lower and upper bound.
+ * Example output :
+ * - 5 25 51 0 200 33
+ *  - 0 50
+ *  OUTPUT -> 25, 0, 33,
+ **/
+
+public class Practice {
+    public static void main (String[] args) {
+        Scanner scnr = new Scanner(System.in);
+        int lowerBound, upperBound;
+        int numElements;
+        int[] intList;
+
+        numElements = scnr.nextInt();           // This indicates the number of integers in the list.
+        intList = new int[numElements];         // Create array with numElements
+
+        for (int i = 0; i < intList.length; i++) {      // Fill in integer array
+            intList[i] = scnr.nextInt();
+        }
+
+        // Get lower and upper bound
+        lowerBound = scnr.nextInt();
+        upperBound = scnr.nextInt();
+
+        // Compare and print
+        for (int i = 0; i < numElements; i++) {
+            if (intList[i] >= lowerBound && intList[i] <= upperBound) {
+                System.out.print(intList[i] + ",");
+            }
+        }
+    }
+}

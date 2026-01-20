@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+/**
+ *
+ * Author: Armando Sarza
+ * File Description: This program reads an integer, a list of words and character.
+ *  - integer signifies how many words are in the list.
+ *  - Outputs every word in the list that contains the character at least once.
+ *
+ * Example output :
+ *  input -> 4 hello, zoo, sleep, drizzle, z
+ *  output -> zoo, drizzle
+ **/
+public class Practice {
+    public static void main(String[] args) {
+        Scanner scnr = new Scanner(System.in);              // Read input scanner
+        int numWords;                                       // holds number of elements (words)
+        String[] listWords;                                 // Array to hold words
+        String character;                                     // holds our character
+
+        numWords = scnr.nextInt();                          // Get first int input
+        listWords = new String[numWords];                   // Assign num elements into array
+
+        for (int i = 0; i < listWords.length; i++) {        // Get words of one line input into array
+            listWords[i] = scnr.next();
+        }
+
+        character = scnr.next();                            // Get last input character
+
+        for (int i = 0; i < listWords.length; i++) {        // Check each element if contain char
+            if (listWords[i].contains(character)) {
+                System.out.print(listWords[i] + ",");       // Print
+            }
+        }
+    }
+}

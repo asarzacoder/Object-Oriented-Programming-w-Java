@@ -1,0 +1,166 @@
+                                        Abstract Class and Interface
+
+-> Abstract Class
+    ------------------------------------------------------------
+    Classes -> Inheritance -> Abstract Classes
+    ------------------------------------------------------------
+
+    - It is like a blueprint for other classes
+        + Helps make new, more specific classes.
+        + Can't create an object directly from an abstract class.
+        + It can also force classes that inherit from it to include certain methods.
+        + Denoted by the keyword abstract in front of the class definition.
+            example: public abstract class shape {}
+        + Any class with one or more abstract methods must be abstract.
+
+    Example: An abstract class called Shape might require every shape (Circle or Rectangle) to have a
+            computeArea() method, so each one knows how to find its own area.
+
+-> Abstract Method
+    + method that is not implemented in the base class, thus all derived classes must override the function.
+    + Denoted by the keyword abstract in front of the method signature.
+        Example: abstract double computeArea();
+
+-------------------------------------------- Coding Example --------------------------------------------
+============================================ Main ============================================
+    public static void main (String[] args) {
+        CANNOT DO THIS: Shape s = new Shape("Circle");
+
+        // You can create objects from subclasses
+        Shape s1 = new Circle(3.0);      <- Passes radius
+        Shape s2 = new Rectangle(4.0, 5.0);     <- Passes both width and height
+
+        System.out.println(s1.getName() + " area = " + s1.computeArea());
+        System.out.println(s2.getName() + " area = " + s2.computeArea());
+    }
+}
+============================================ Main ============================================
+======================================= Abstract Class =======================================
+
+/**
+    * What to notice:
+    * - Shape is abstract, you can't create an object (shape circle = new shape());
+    * - Shape forces every subclass to implement computeArea();
+**/
+public class AbstractClassDemo {
+
+    public static abstract class Shape {
+        String name;
+        -> Setter and Getter
+
+        // Abstract method: no body statements here
+        // Each subclass MUST write its own
+        -> public abstract double computeArea();
+    }
+======================================= Abstract Class =======================================
+
+========================================= Other Class ========================================
+/**
+ * Circle Shape;
+ * Because Shape requires computeArea(), Circle must implement it;
+**/
+public static class Circle extends Shape {
+  double radius;
+
+  // Creates a circle
+  public Circle (double radius) {
+    super("Circle");
+    this.radius = radius;
+        }
+
+    // computeArea();
+    @Override
+    public double computeArea() {
+      return Math.PI * radius * radius;
+      }
+    }
+
+/**
+ * Rectangle Shape;
+ * Must also implement computeArea();
+**/
+public static class Rectangle extends Shape {
+    BODY
+}
+========================================= Other Class ========================================
+
+-------------------------------------- UML Class Diagram -------------------------------------
+-> Unified Modeling Language (UML) is a language software design that uses different types of diagrams to visualize the
+   structure and behavior of programs.
+   + Structural diagram: visualizes static elements of software (variables and methods) used in the program.
+   + Behavioral diagram: visualizes dynamic behavior of software, such as flow of an algorithm.
+   + Class diagram: structural diagram that can be used to visually model the classes of a computer program.
+
+    -----------------------------             -----------------------------
+    |          Circle           |             |           Square          | -> Class name
+    -----------------------------             -----------------------------
+    |   - radius: double        |             |   - size: double          | -> Member variable name: type
+    |   - center: Point         |             |   - center: Point         | -> Member variable name: type
+    |   + computeArea(): double |             |   + computeArea(): double | -> Method name: return type
+    -----------------------------             -----------------------------
+
+    Notes: Private and public access is noted to the left of each member.
+        + (-) indicates private
+        + (+) indicates public
+
+-> UML for inheritance
+    + UML uses an arrow with a solid line and arrow head to indicate that one class inherits from another.
+      The arrow points towards the superclass.
+    + UML uses italics to denote abstract classes.
+    + UML uses italics for the abstract class name, and for each abstract method in the class.
+
+========================================= Interfaces ========================================
+-> Interfaces are like "rule sheet" or "contract" for a class.
+    + If a class says it "implements" an interface:
+        - it will include these methods, with these exact names and parameters.
+    + Uses the keyword interface.
+        Example: public interface drawable { ... }
+    + Any class that implements an interface must:
+        + List the interface name after the keyword implements.
+        + Override and implement the interface's abstract method.
+
+-> UML Interfaces
+    + UML Diagrams denote interfaces using the keyword interface (inside double angle brackets, above the class name)
+        <<interface>>
+    + Classes that implement the interface have a dashed line with an unfilled arrow pointing at the interface.
+
+Example Codes: 2 interfaces
+    ----------------------------------------------------------------------------------------------
+    public interface Drawable {                       | public interface DrawableASCII {
+        public void draw(Graphics2D graphicsObject);  |      public void drawASCII(char drawChar);
+    }                                                 | }
+    ----------------------------------------------------------------------------------------------
+Implementing the 2 interfaces:
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
+public class Square implements Drawable, DrawableASCII {    <- IMPLEMENTATION
+   private int sideLength;
+
+   public Square(int sideLength) {
+      this.sideLength = sideLength;
+   }
+
+   @Override
+   public void draw(Graphics2D graphicsObject) {            <- INTERFACE 1
+      Rectangle shapeObject = new Rectangle(0, 0, this.sideLength, this.sideLength);
+      Color colorObject = new Color(255, 0, 0);
+      graphicsObject.setColor(colorObject);
+      graphicsObject.fill(shapeObject);
+   }
+
+   @Override
+   public void drawASCII(char drawChar) {                   <- INTERFACE 2
+      int rowIndex;
+      int columnIndex;
+
+      for (rowIndex = 0; rowIndex < this.sideLength; ++rowIndex) {
+         for (columnIndex = 0; columnIndex < this.sideLength; ++columnIndex) {
+            System.out.print(drawChar);
+         }
+         System.out.println();
+      }
+   }
+}
